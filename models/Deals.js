@@ -4,13 +4,14 @@ Joi.objectId = require("joi-objectid")(Joi);
 
 const dealSchema = new mongoose.Schema({
   name: String,
-  movieName: String,
-  movieAvailability:[{
+  //movieName: String,
+  availability:[{
     day:String,
     slot:[{
       from:String,
       to:String,
       price:Number,
+      qty:Number
       /*seats:[{
       seatno:String,
       isavailable:{type:Boolean,default:true}
@@ -31,7 +32,7 @@ const dealSchema = new mongoose.Schema({
   extraPrice:Number,
   //hotel deal finished
 
-  availability:[{
+  /*availability:[{
     day:String,
     slot:[{
       from:String,
@@ -39,7 +40,7 @@ const dealSchema = new mongoose.Schema({
       price:Number,
       qty:Number
     }]
-  }],
+  }],*/
   description: String,
   img: {
     type: String,
@@ -55,7 +56,7 @@ const dealSchema = new mongoose.Schema({
   },
   price: {
     type: Number,
-    required: true,
+  
   },
   commision: {
     //? also percent?? if yes also change validation
@@ -191,24 +192,23 @@ function validateactivityDeal(deal) {
 
 function validatemovieDeal(deal) {
   const schema = Joi.object({
-    movieName: Joi.string().required(),
+    //movieName: Joi.string().required(),
+    name:Joi.string().required(),
     description: Joi.string(),
-    row:Joi.number().required(),
-    col:Joi.number().required(),
     img: Joi.string().required(),
     merchant: Joi.objectId().required(),
-    price: Joi.number().required(),
     commision: Joi.number().required(),
     discountPercent: Joi.number(),
     prefernceOrder: Joi.number().required(),
     category: Joi.objectId().required(),
-    movieAvailability:Joi.array().items(
+    availability:Joi.array().items(
       Joi.object({
         day:Joi.string().required(),
         slot:Joi.array().items(Joi.object({
         from:Joi.string().required(),
         to:Joi.string().required(),
         price:Joi.number().required(),
+        qty:Joi.number().required()
         }))
       })
       ),

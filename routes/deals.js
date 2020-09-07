@@ -70,7 +70,7 @@ router.post("/new_movie",async (req, res, next) => {
 
   }
   catch(err) {
-    res.json("Something went wrong!");
+    console.log(err)
   }
 
   });
